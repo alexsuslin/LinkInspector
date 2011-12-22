@@ -26,9 +26,8 @@ namespace LinkInspector.Objects
 //            else if (response is FileWebResponse)
 //                state.StatusCode = HttpStatusCode.OK;
 
-            if (state.StatusCode.Equals(HttpStatusCode.OK))
-            {
-                if (ContentHandler != null)
+            if (state.IsOk && ContentHandler != null)
+            {               
                     ContentHandler(state);
             }
 

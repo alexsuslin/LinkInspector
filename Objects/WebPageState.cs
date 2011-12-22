@@ -46,7 +46,15 @@ namespace LinkInspector.Objects
             }
         }
 
-        public List<WebRequestState> Redirects { get; set; } 
+        public List<WebRequestState> Redirects { get; set; }
+
+        public bool IsOk
+        {
+            get {
+                return Status == PageStatus.Success || 
+                    ( Status == PageStatus.Redirect && Redirects.Count > 0 && Redirects[Redirects.Count-1].StatusCode.Equals(HttpStatusCode.OK));
+            }
+        }
         
 
         #endregion
