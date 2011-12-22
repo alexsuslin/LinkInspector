@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Text;
 
 namespace LinkInspector.Objects
 {
@@ -39,17 +41,13 @@ namespace LinkInspector.Objects
             }
             set
             {
-                int statusNumber = (int)value;
-                if (statusNumber >= 200 && statusNumber < 300)
-                    Status = PageStatus.Success;
-                else if (statusNumber >= 300 && statusNumber < 400)
-                    Status = PageStatus.Redirect;
-                else
-                    Status = PageStatus.Fail;
-
+                Status = GetStatus(value);
                 statusCode = value;
             }
         }
+
+        public List<WebRequestState> Redirects { get; set; } 
+        
 
         #endregion
 
@@ -66,6 +64,16 @@ namespace LinkInspector.Objects
 
         #endregion
 
+        #region Classes
+
+        public class WebRequestState
+        {
+            public Uri Uri { get; set; }
+            public HttpStatusCode StatusCode { get; set; }
+        }
+
+        #endregion
+
         #region Constructors
 
         public WebPageState(Uri uri)
@@ -73,6 +81,7 @@ namespace LinkInspector.Objects
             this.uri = uri;
             Status = PageStatus.Pending;
             statusCode = 0; // Unknown
+            Redirects = new List<WebRequestState>();
         }
 
         public WebPageState(string uri)
@@ -86,7 +95,26 @@ namespace LinkInspector.Objects
 
         public override string ToString()
         {
-            return string.Format("[{0,5:F2}s] [{1}] : {2} ", ElapsedTimeSpan.TotalSeconds, (int)StatusCode, Uri);
+            StringBuilder sb = new StringBuilder(string.Format("[{0,5:F2}s] [{1}] : {2} ", ElapsedTimeSpan.TotalSeconds, (int)StatusCode, Uri));
+            if(Redirects.Count > 0)
+                foreach (WebRequestState redirect in Redirects)
+                {
+                    sb.AppendFormat("\n{0,20}[{1}] : {2}", string.Empty, (int)redirect.StatusCode, redirect.Uri.AbsoluteUri);
+                }
+            return sb.ToString();
+        }
+
+        public PageStatus GetStatus(HttpStatusCode httpStatusCode)
+        {
+            int statusNumber = (int)httpStatusCode;
+
+            if (statusNumber >= 200 && statusNumber < 300)
+                return PageStatus.Success;
+
+            if (statusNumber >= 300 && statusNumber < 400)
+                return PageStatus.Redirect;
+
+            return PageStatus.Fail;
         }
 
         #endregion

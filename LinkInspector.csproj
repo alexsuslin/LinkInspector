@@ -65,6 +65,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Templates\media\css\site.css" />
+    <Content Include="Templates\media\images\back_disabled.jpg" />
+    <Content Include="Templates\media\images\back_enabled.jpg" />
+    <Content Include="Templates\media\images\favicon.ico" />
+    <Content Include="Templates\media\images\forward_disabled.jpg" />
+    <Content Include="Templates\media\images\forward_enabled.jpg" />
+    <Content Include="Templates\media\images\sort_asc.png" />
+    <Content Include="Templates\media\images\sort_asc_disabled.png" />
+    <Content Include="Templates\media\images\sort_both.png" />
+    <Content Include="Templates\media\images\sort_desc.png" />
+    <Content Include="Templates\media\images\sort_desc_disabled.png" />
+    <Content Include="Templates\media\js\jquery.dataTables.min.js" />
+    <Content Include="Templates\media\js\jquery.js" />
     <Content Include="Templates\ReportTemplate.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
