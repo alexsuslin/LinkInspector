@@ -1159,5 +1159,6 @@ tr.even.gradeU td.sorting_3 {
 */
 tr.error { background-color: #EBB; }
 tr.success { background-color: #9F9; }
+tr.redirect { background-color: #EECCAF; }
 tr {border-bottom: 1px solid #666;}
 th select {width:100%}
