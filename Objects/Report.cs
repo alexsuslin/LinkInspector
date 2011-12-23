@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using LinkInspector.Commands;
 using RazorEngine;
 
 namespace LinkInspector.Objects
@@ -109,39 +108,6 @@ namespace LinkInspector.Objects
                     string path = !string.IsNullOrEmpty(htmlTemplatePath) ? htmlTemplatePath : Config.HtmlTemplate;
                     string content = GetFileContent(path);
                     rb.Append(Razor.Parse(content, this));
-
-//
-//
-//                    
-//                    string rowPlace = content.Substring(content.IndexOf("{#Rows["), content.LastIndexOf("]Rows#}") - content.IndexOf("{#Rows[") + "]Rows#}".Length);
-//                    string rowTemplate = rowPlace.TrimStart("{#Rows[".ToCharArray()).TrimEnd("]Rows#}".ToCharArray());
-//
-//                    string redirectPlace = rowPlace.Substring(rowPlace.IndexOf("{#Redirects["), rowPlace.LastIndexOf("]Redirects#}") - rowPlace.IndexOf("{#Redirects[") + "]Redirects#}".Length);
-//                    string redirectTemplate = redirectPlace.TrimStart("{#Redirects[".ToCharArray()).TrimEnd("]Redirects#}".ToCharArray());
-//
-//
-//                    string rowPlaceRedirect = redirectTemplate.Substring(redirectTemplate.IndexOf("{#RowsRedirect["), redirectTemplate.LastIndexOf("]RowsRedirect#}") - redirectTemplate.IndexOf("{#RowsRedirect[") + "]RowsRedirect#}".Length);
-//                    string rowTemplateRedirect = rowPlaceRedirect.TrimStart("{#RowsRedirect[".ToCharArray()).TrimEnd("]RowsRedirect#}".ToCharArray());
-//
-//                    StringBuilder sb = new StringBuilder();
-//                    foreach (WebPageState pageState in PageStates)
-//                    {
-//                        string redirects = pageState.Redirects.Count > 0 ? ParseRedirects(rowTemplateRedirect, pageState.Redirects) : string.Empty;
-//                        sb.AppendLine(rowTemplate
-//                                          .Replace("{#StatusCode#}", ((int)pageState.StatusCode).ToString())
-//                                          .Replace("{#StatusDescription#}", pageState.StatusCode.ToString())
-//                                          .Replace("{#PageUrl#}", pageState.Uri.ToString())
-//                                          .Replace("{#RowClass#}", pageState.Status.ToString().ToLower())
-//                                          .Replace("{#ElapsedItem#}", pageState.ElapsedTimeSpan.TotalSeconds.ToString("F2"))
-//                                          .Replace(rowPlaceRedirect, redirectTemplate.Replace(rowPlaceRedirect, redirects))
-//                            );
-//                    }
-//
-//                    content = content
-//                        .Replace("{#Website#}", StartUri.AbsoluteUri)
-//                        .Replace(rowPlace, sb.ToString())
-//                        .Replace("{#MediaPath#}", Path.GetDirectoryName(Path.GetFullPath(path)).Substring(Path.GetDirectoryName(Path.GetFullPath(path)).LastIndexOf("\\") + 1));
-//                    rb.Append(content);
                     break;
                 default:
                     return;
@@ -150,19 +116,6 @@ namespace LinkInspector.Objects
             {
                 outfile.Write(rb.ToString());
             }
-        }
-
-        private string ParseRedirects(string content, List<WebPageState.WebRequestState> redirects)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (WebPageState.WebRequestState state in redirects)
-            {
-                sb.AppendLine(content
-                                  .Replace("{#RedirectStatusCode#}", state.StatusCode.ToString())
-                                  .Replace("{#RedirectUrl#}", state.Uri.AbsoluteUri)
-                    );
-            }
-            return sb.ToString();
         }
 
         private string GetFileContent(string path)
