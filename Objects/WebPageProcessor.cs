@@ -21,11 +21,6 @@ namespace LinkInspector.Objects
             if (response == null)
                 return false;
 
-//            if (response is HttpWebResponse)
-//                state.StatusCode = ((HttpWebResponse)response).StatusCode;
-//            else if (response is FileWebResponse)
-//                state.StatusCode = HttpStatusCode.OK;
-
             if (state.IsOk && ContentHandler != null)
             {               
                     ContentHandler(state);
@@ -57,6 +52,8 @@ namespace LinkInspector.Objects
                 {
                     state.Redirects[state.Redirects.Count - 1].StatusCode = ((HttpWebResponse) response).StatusCode;
                 }
+
+                state.StatusCodeDescription = ((HttpWebResponse)response).StatusDescription;
                 
                 if (response is HttpWebResponse && state.GetStatus(((HttpWebResponse)response).StatusCode) == WebPageState.PageStatus.Redirect)
                 {

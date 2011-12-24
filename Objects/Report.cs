@@ -114,7 +114,7 @@ namespace LinkInspector.Objects
                     {
                         sb.AppendLine(rowTemplate
                                           .Replace("{#StatusCode#}", ((int)pageState.StatusCode).ToString())
-                                          .Replace("{#StatusDescription#}", pageState.StatusCode.ToString())
+                                          .Replace("{#StatusDescription#}", pageState.StatusCodeDescription)
                                           .Replace("{#PageUrl#}", pageState.Uri.ToString())
                                           .Replace("{#RowClass#}", pageState.Status.ToString().ToLower())
                                           .Replace("{#ElapsedItem#}", pageState.ElapsedTimeSpan.TotalSeconds.ToString("F2"))

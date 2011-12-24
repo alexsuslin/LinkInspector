@@ -46,6 +46,8 @@ namespace LinkInspector.Objects
             }
         }
 
+        public string StatusCodeDescription { get; set; }
+
         public List<WebRequestState> Redirects { get; set; }
 
         public bool IsOk
