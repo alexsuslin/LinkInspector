@@ -18,15 +18,15 @@ namespace LinkInspector.Objects
         {
             WebResponse response = GetDestinationResponse(state);
 
-            if (response == null)
-                return false;
+            bool isProcessSuccessfull =
+                response != null &&
+                state.IsOk &&
+                ContentHandler != null;
 
-            if (state.IsOk && ContentHandler != null)
-            {               
-                    ContentHandler(state);
-            }
-
-            return true;
+            if (isProcessSuccessfull)
+                ContentHandler(state);
+            
+            return isProcessSuccessfull;
         }
 
         private WebResponse GetDestinationResponse(WebPageState state, Uri redirect = null)

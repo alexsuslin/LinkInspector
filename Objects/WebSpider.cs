@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace LinkInspector.Objects
 {
@@ -52,22 +53,25 @@ namespace LinkInspector.Objects
             Console.WriteLine(report.ToString(Report.ReportFormat.Head));
 
             AddWebPage(StartUri, StartUri.AbsoluteUri);
-
+            Stopwatch sw = new Stopwatch();
             try
-            {
+            { 
                 while (webPagesPending.Count > 0 &&
                        (spiderOptions.UriProcessedCountMax == -1 || report.PagesProcessed < spiderOptions.UriProcessedCountMax))
                 {
                     Console.Write("{0,4}/{1,-4}: ", report.PagesProcessed, webPagesPending.Count);
-                    var state = (WebPageState)webPagesPending.Dequeue();
-                    DateTime startProcess = DateTime.Now;
-                    spiderOptions.WebPageProcessor.Process(state);
-                    state.ElapsedTimeSpan = new TimeSpan(DateTime.Now.Ticks - startProcess.Ticks);
-                    if (spiderOptions.ShowSuccessUrls || state.Status == WebPageState.PageStatus.Fail)
+                    var state = (WebPageState)webPagesPending.Dequeue();                    
+                    
+                    sw.Start();                    
+                    spiderOptions.WebPageProcessor.Process(state);                    
+                    sw.Stop();                    
+
+                    state.ElapsedTimeSpan = sw.Elapsed;
+                    if (spiderOptions.ShowSuccessUrls || !state.IsOk)
                         report.PageStates.Add(state);
 
-                    if (!spiderOptions.KeepWebContent)
-                        state.Content = null;
+//                    if (!spiderOptions.KeepWebContent)
+//                        state.Content = null;
 
                     report.PagesProcessed++;
                     Console.WriteLine(state);
