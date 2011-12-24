@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Text;
 using LinkInspector.Objects;
 using ManyConsole;
 using NDesk.Options;

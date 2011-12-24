@@ -41,8 +41,15 @@
     <Reference Include="NDesk.Options">
       <HintPath>packages\NDesk.Options.0.2.1\lib\NDesk.Options.dll</HintPath>
     </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>packages\RazorEngine.3.0.5\lib\net40\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\RazorEngine.3.0.5\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Help.cs" />
@@ -78,7 +85,7 @@
     <Content Include="Templates\media\images\sort_desc_disabled.png" />
     <Content Include="Templates\media\js\jquery.dataTables.min.js" />
     <Content Include="Templates\media\js\jquery.js" />
-    <Content Include="Templates\ReportTemplate.html" />
+    <None Include="Templates\ReportTemplate.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

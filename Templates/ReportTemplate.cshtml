@@ -1,10 +1,21 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+﻿@using LinkInspector.Objects
+
+@functions {
+    private string TrimLongUrl(string str)
+    {
+        if(str.Length > 43)
+            str = str.Substring(0, 40) + "...";
+        return str;
+    }
+
+}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 	<head>
 		<title>http://softeq.com/</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />		
 		<style type="text/css" title="currentStyle">
-			@import "Templates/media/css/site.css";
+			@@import "Templates/media/css/site.css";
 		</style>
 		<script type="text/javascript" language="javascript" src="Templates/media/js/jquery.js"></script>
 		<script type="text/javascript" language="javascript" src="Templates/media/js/jquery.dataTables.min.js"></script>
@@ -133,7 +144,36 @@ $("tfoot th.select").each( function ( i ) {
 
 	    <table id="report" class="display">
             <thead><tr><th>Status Code</th><th>Status Description</th><th>Elapsed, s</th><th>Page Url</th></tr></thead>
-	    <tbody>{#Rows[<tr class="{#RowClass#}"><td>{#StatusCode#}</td><td>{#StatusDescription#}</td><td>{#ElapsedItem#}</td><td><a target="__blank" href="{#PageUrl#}">{#PageUrl#}</a></td></tr>]Rows#}</tbody>
+	    <tbody>
+            @foreach (WebPageState state in Model.PageStates)
+            {
+                <tr class="@state.Status">
+                    <td>@((int)state.StatusCode)</td>
+                    <td>@state.StatusCode</td>
+                    <td>@state.ElapsedTimeSpan.TotalSeconds.ToString("F2")</td>
+                    <td>
+                        <a href="@state.Uri.AbsoluteUri">@TrimLongUrl(state.Uri.AbsoluteUri)</a>
+                        @if(state.Redirects.Count > 0)
+                        {
+                            <table>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Url</th>
+                                </tr>
+                                @foreach (var redirect in state.Redirects)
+                                {
+                                    <tr>
+                                        <td>@((int)redirect.StatusCode)</td>
+                                        <td><a href="@redirect.Uri.AbsoluteUri">@TrimLongUrl(redirect.Uri.AbsoluteUri)</a></td>
+                                    </tr>
+                                }
+                            </table>
+                        }
+                    </td>
+                </tr>
+            }
+           
+        </tbody>
 	<tfoot>
 		<tr>    
 			<th class="select"></th>

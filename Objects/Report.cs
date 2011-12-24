@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using LinkInspector.Commands;
+using RazorEngine;
 
 namespace LinkInspector.Objects
 {
@@ -107,25 +107,8 @@ namespace LinkInspector.Objects
                 case OutputFileFormat.html:
                     string path = !string.IsNullOrEmpty(htmlTemplatePath) ? htmlTemplatePath : Config.HtmlTemplate;
                     string content = GetFileContent(path);
-                    string rowPlace = content.Substring(content.IndexOf("{#Rows["), content.LastIndexOf("]Rows#}") - content.IndexOf("{#Rows[") + "]Rows#}".Length);
-                    string rowTemplate = rowPlace.TrimStart("{#Rows[".ToCharArray()).TrimEnd("]Rows#}".ToCharArray());
-                    StringBuilder sb = new StringBuilder();
-                    foreach (WebPageState pageState in PageStates)
-                    {
-                        sb.AppendLine(rowTemplate
-                                          .Replace("{#StatusCode#}", ((int)pageState.StatusCode).ToString())
-                                          .Replace("{#StatusDescription#}", pageState.StatusCodeDescription)
-                                          .Replace("{#PageUrl#}", pageState.Uri.ToString())
-                                          .Replace("{#RowClass#}", pageState.Status.ToString().ToLower())
-                                          .Replace("{#ElapsedItem#}", pageState.ElapsedTimeSpan.TotalSeconds.ToString("F2"))
-                            );
-                    }
+                    rb.Append(Razor.Parse(content, this));
 
-                    content = content
-                        .Replace("{#Website#}", StartUri.AbsoluteUri)
-                        .Replace(rowPlace, sb.ToString())
-                        .Replace("{#MediaPath#}", Path.GetDirectoryName(Path.GetFullPath(path)).Substring(Path.GetDirectoryName(Path.GetFullPath(path)).LastIndexOf("\\") + 1));
-                    rb.Append(content);
                     break;
                 default:
                     return;
