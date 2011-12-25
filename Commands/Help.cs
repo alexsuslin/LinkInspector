@@ -1,4 +1,5 @@
 ﻿using System;
+using LinkInspector.Properties;
 using ManyConsole;
 
 namespace LinkInspector.Commands
@@ -7,8 +8,11 @@ namespace LinkInspector.Commands
     {
         public GetHelp()
         {
+            OneLineDescription = Resources.Help;
+            
+            
             Command = "-h";
-            OneLineDescription = "An example of how to use this application.";
+            //OneLineDescription = "An example of how to use this application.";
         }
 
         public override int Run()
