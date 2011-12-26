@@ -61,21 +61,23 @@
     <DelaySign>false</DelaySign>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ManyConsole">
-      <HintPath>packages\ManyConsole.0.3.7.0\lib\ManyConsole.dll</HintPath>
+    <Reference Include="ManyConsole, Version=0.3.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external\ManyConsole.0.3.7.0\ManyConsole.dll</HintPath>
     </Reference>
-    <Reference Include="NDesk.Options">
-      <HintPath>packages\NDesk.Options.0.2.1\lib\NDesk.Options.dll</HintPath>
+    <Reference Include="NDesk.Options, Version=0.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external\NDesk.Options.0.2.1\NDesk.Options.dll</HintPath>
     </Reference>
-    <Reference Include="RazorEngine">
-      <HintPath>packages\RazorEngine.3.0.5\lib\net40\RazorEngine.dll</HintPath>
+    <Reference Include="RazorEngine, Version=3.0.5.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external\RazorEngine.3.0.5\RazorEngine.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Help.cs" />
+    <Compile Include="Commands\GetHelp.cs" />
     <Compile Include="Commands\ParseUrl.cs" />
     <Compile Include="Commands\GetVerion.cs" />
     <Compile Include="Objects\Config.cs" />
