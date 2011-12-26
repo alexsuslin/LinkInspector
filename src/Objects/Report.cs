@@ -11,7 +11,7 @@ namespace LinkInspector.Objects
 {
     public sealed class Report
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         #region Enums
 
@@ -24,9 +24,9 @@ namespace LinkInspector.Objects
 
         public enum OutputFileFormat
         {
-            txt,
-            html,
-            none
+            Txt,
+            Html,
+            None
         }
 
         #endregion
@@ -107,10 +107,10 @@ namespace LinkInspector.Objects
             StringBuilder rb = new StringBuilder();
             switch (fileFormat)
             {
-                case OutputFileFormat.txt:
+                case OutputFileFormat.Txt:
                     rb.Append(this);
                     break;
-                case OutputFileFormat.html:
+                case OutputFileFormat.Html:
                     string path = !string.IsNullOrEmpty(htmlTemplatePath) ? htmlTemplatePath : Config.HtmlTemplate;
                     string content = GetFileContent(path);
                     rb.Append(Razor.Parse(content, this));
@@ -137,8 +137,8 @@ namespace LinkInspector.Objects
             }
             catch (IOException ex)
             {
-                logger.Error(Resources.ReportGetFileContentCantReadError, path);
-                logger.ErrorException(ex.Message, ex);
+                Logger.Error(Resources.ReportGetFileContentCantReadError, path);
+                Logger.ErrorException(ex.Message, ex);
             }
             return template;
         }

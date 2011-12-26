@@ -15,16 +15,16 @@ namespace LinkInspector.Commands
         private string outputFileFormat;
         private string htmlTemplate;
         private bool  errorsOnly;
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
 
-        private Report.OutputFileFormat fileFormat
+        private Report.OutputFileFormat FileFormat
         {
             get
             {
                 Report.OutputFileFormat format;
                 if (!Enum.TryParse(outputFileFormat, true, out format))
-                    format = Report.OutputFileFormat.none;
+                    format = Report.OutputFileFormat.None;
                 return format;
             }
         }
@@ -57,7 +57,7 @@ namespace LinkInspector.Commands
             Uri uri;
             if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
             {
-                logger.Error(CultureInfo.InvariantCulture, Resources.ParseUrlRunCantCreateUriError);
+                Logger.Error(CultureInfo.InvariantCulture, Resources.ParseUrlRunCantCreateUriError);
                 return -1;
             }
 
@@ -65,21 +65,21 @@ namespace LinkInspector.Commands
 
             if (!string.IsNullOrEmpty(number) && (!Int32.TryParse(number, out count) || count < 1))
             {
-                logger.Error(Resources.ParseUrlRunNotIntegerError, number);
+                Logger.Error(Resources.ParseUrlRunNotIntegerError, number);
                 return -1;
             }
 
-            if (!string.IsNullOrEmpty(outputFileFormat) && fileFormat == Report.OutputFileFormat.none)
+            if (!string.IsNullOrEmpty(outputFileFormat) && FileFormat == Report.OutputFileFormat.None)
             {
-                logger.Error(Resources.ParseUrlRunUnsupportedFormatError, outputFileFormat);
+                Logger.Error(Resources.ParseUrlRunUnsupportedFormatError, outputFileFormat);
                 return -1;
             }
 
             WebSpiderOptions options = new WebSpiderOptions {UriProcessedCountMax = count, ShowSuccessUrls = !errorsOnly};
            
             Report report = new WebSpider(uri, options).Execute();
-            if (fileFormat != Report.OutputFileFormat.none)
-                report.SaveReport(fileFormat, htmlTemplate);
+            if (FileFormat != Report.OutputFileFormat.None)
+                report.SaveReport(FileFormat, htmlTemplate);
             return 0;
         }
     }

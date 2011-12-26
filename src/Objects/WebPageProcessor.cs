@@ -44,8 +44,9 @@ namespace LinkInspector.Objects
 
             try
             {
-                response = (HttpWebResponse)request.GetResponse();
-
+                if ((response = request.GetResponse() as HttpWebResponse) == null)
+                    return null;
+                
                 if (redirect == null)
                     state.StatusCode = response.StatusCode;
                 else if (state.Redirects.Count > 0)
@@ -63,7 +64,9 @@ namespace LinkInspector.Objects
                 }
                 else
                 {
-                    state.Content = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                    Stream stream = response.GetResponseStream();
+                    if (stream != null)
+                        state.Content = new StreamReader(stream).ReadToEnd();
                 }
             }
             catch (WebException ex)

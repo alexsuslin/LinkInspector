@@ -7,7 +7,7 @@ namespace LinkInspector.Commands
 {
     internal sealed class GetVerion : ConsoleCommand
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public GetVerion()
         {
@@ -17,7 +17,7 @@ namespace LinkInspector.Commands
 
         public override int Run()
         {
-            logger.Info(Resources.GetVerionRunCurrentVersion, new AssemblyName(Assembly.GetExecutingAssembly().FullName).Version);
+            Logger.Info(Resources.GetVerionRunCurrentVersion, new AssemblyName(Assembly.GetExecutingAssembly().FullName).Version);
             return 0;
         }
     }

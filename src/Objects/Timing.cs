@@ -11,7 +11,7 @@ namespace LinkInspector.Objects
 
         private readonly String description;
         private readonly Stopwatch watch = Stopwatch.StartNew();
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace LinkInspector.Objects
         public void Dispose()
         {
             watch.Stop();
-            logger.Info("{0} took {1} ms.", description, watch.ElapsedMilliseconds);
+            Logger.Info("{0} took {1} ms.", description, watch.ElapsedMilliseconds);
         }
 
         #endregion

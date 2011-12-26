@@ -6,7 +6,7 @@ namespace LinkInspector.Commands
 {
     internal sealed class GetHelp : ConsoleCommand
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public GetHelp()
         {
@@ -16,7 +16,7 @@ namespace LinkInspector.Commands
 
         public override int Run()
         {
-            logger.Info(Resources.GetHelpRunUsage);
+            Logger.Info(Resources.GetHelpRunUsage);
             return 0;
         }
     }

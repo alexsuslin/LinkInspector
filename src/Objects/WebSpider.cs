@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using LinkInspector.Properties;
@@ -15,7 +14,7 @@ namespace LinkInspector.Objects
         private readonly Queue webPagesPending;
         private readonly Hashtable webPages;
         private readonly WebSpiderOptions spiderOptions;
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         #endregion
 
@@ -48,7 +47,7 @@ namespace LinkInspector.Objects
         {
             Report report = new Report {StartUri = StartUri};
 
-            logger.Info(report.ToString(Report.ReportFormat.Head));
+            Logger.Info(report.ToString(Report.ReportFormat.Head));
 
             AddWebPage(StartUri, StartUri.AbsoluteUri);
             Stopwatch sw = new Stopwatch();
@@ -70,7 +69,7 @@ namespace LinkInspector.Objects
 //                        state.Content = null;
 
                     report.PagesProcessed++;
-                    logger.Info(Resources.WebSpiderExecuteProcessedUrlsInfo, report.PagesProcessed, webPagesPending.Count,state);
+                    Logger.Info(Resources.WebSpiderExecuteProcessedUrlsInfo, report.PagesProcessed, webPagesPending.Count,state);
                 }
 //            }
 //            catch (Exception ex)
@@ -79,7 +78,7 @@ namespace LinkInspector.Objects
 //            }
 
             report.EndTime = DateTime.Now;
-            logger.Info(report.ToString(Report.ReportFormat.Footer));
+            Logger.Info(report.ToString(Report.ReportFormat.Footer));
             return report;
         }
 
@@ -112,8 +111,6 @@ namespace LinkInspector.Objects
 
             webPagesPending.Enqueue(state);
             webPages.Add(uri, state);
-
-            return;
         }
 
         #endregion
