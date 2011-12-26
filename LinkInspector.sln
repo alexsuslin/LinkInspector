@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkInspector", "LinkInspector.csproj", "{C55F63E7-627F-44E2-83CF-ABD9D0062A4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkInspector", "src\LinkInspector.csproj", "{C55F63E7-627F-44E2-83CF-ABD9D0062A4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
