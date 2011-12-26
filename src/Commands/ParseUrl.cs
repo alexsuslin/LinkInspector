@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Globalization;
 using LinkInspector.Objects;
 using LinkInspector.Properties;
 using ManyConsole;
 using NDesk.Options;
+using NLog;
 
 namespace LinkInspector.Commands
 {
@@ -13,6 +15,8 @@ namespace LinkInspector.Commands
         private string outputFileFormat;
         private string htmlTemplate;
         private bool  errorsOnly;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
 
         private Report.OutputFileFormat fileFormat
         {
@@ -53,7 +57,7 @@ namespace LinkInspector.Commands
             Uri uri;
             if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
             {
-                Console.WriteLine(Resources.ParseUrlRunCantCreateUriError, url);
+                logger.Error(CultureInfo.InvariantCulture, Resources.ParseUrlRunCantCreateUriError);
                 return -1;
             }
 
@@ -61,13 +65,13 @@ namespace LinkInspector.Commands
 
             if (!string.IsNullOrEmpty(number) && (!Int32.TryParse(number, out count) || count < 1))
             {
-                Console.WriteLine(Resources.ParseUrlRunNotIntegerError, number);
+                logger.Error(Resources.ParseUrlRunNotIntegerError, number);
                 return -1;
             }
 
             if (!string.IsNullOrEmpty(outputFileFormat) && fileFormat == Report.OutputFileFormat.none)
             {
-                Console.WriteLine(Resources.ParseUrlRunUnsupportedFormatError, outputFileFormat);
+                logger.Error(Resources.ParseUrlRunUnsupportedFormatError, outputFileFormat);
                 return -1;
             }
 

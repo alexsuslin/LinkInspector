@@ -105,7 +105,7 @@ namespace LinkInspector.Objects
             if(Redirects.Count > 0)
                 foreach (WebRequestState redirect in Redirects)
                 {
-                    sb.AppendFormat("\n{0,20}[{1}] : {2}", string.Empty, (int)redirect.StatusCode, redirect.Uri.AbsoluteUri);
+                    sb.AppendFormat("\n{0,19}[{1}] : {2}", string.Empty, (int)redirect.StatusCode, redirect.Uri.AbsoluteUri);
                 }
             return sb.ToString();
         }

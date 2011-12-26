@@ -1,8 +1,7 @@
-﻿using AppConfig = System.Configuration.ConfigurationManager;
-
-namespace LinkInspector.Objects
+﻿namespace LinkInspector.Objects
 {
-
+    using AppConfig = System.Configuration.ConfigurationManager;
+    
     internal static class Config
     {
         #region Properties

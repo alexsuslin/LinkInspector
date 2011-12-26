@@ -1,11 +1,13 @@
-﻿using System;
-using LinkInspector.Properties;
+﻿using LinkInspector.Properties;
 using ManyConsole;
+using NLog;
 
 namespace LinkInspector.Commands
 {
     internal sealed class GetHelp : ConsoleCommand
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         public GetHelp()
         {
             OneLineDescription = Resources.GetHelpCommandDescription;
@@ -14,7 +16,7 @@ namespace LinkInspector.Commands
 
         public override int Run()
         {
-            Console.WriteLine(Resources.GetHelpRunUsage);
+            logger.Info(Resources.GetHelpRunUsage);
             return 0;
         }
     }

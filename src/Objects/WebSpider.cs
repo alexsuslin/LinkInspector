@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using LinkInspector.Properties;
+using NLog;
 
 namespace LinkInspector.Objects
 {
@@ -13,6 +15,7 @@ namespace LinkInspector.Objects
         private readonly Queue webPagesPending;
         private readonly Hashtable webPages;
         private readonly WebSpiderOptions spiderOptions;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         #endregion
 
@@ -44,8 +47,8 @@ namespace LinkInspector.Objects
         public Report Execute()
         {
             Report report = new Report {StartUri = StartUri};
-            
-            Console.WriteLine(report.ToString(Report.ReportFormat.Head));
+
+            logger.Info(report.ToString(Report.ReportFormat.Head));
 
             AddWebPage(StartUri, StartUri.AbsoluteUri);
             Stopwatch sw = new Stopwatch();
@@ -54,8 +57,7 @@ namespace LinkInspector.Objects
                 while (webPagesPending.Count > 0 &&
                        (spiderOptions.UriProcessedCountMax == -1 || report.PagesProcessed < spiderOptions.UriProcessedCountMax))
                 {
-                    Console.Write(Resources.WebSpiderExecuteProcessedUrlsInfo, report.PagesProcessed, webPagesPending.Count);
-                    var state = (WebPageState)webPagesPending.Dequeue();
+                    WebPageState state = (WebPageState)webPagesPending.Dequeue();
                     sw.Start();                    
                     spiderOptions.WebPageProcessor.Process(state);                    
                     sw.Stop();                    
@@ -68,7 +70,7 @@ namespace LinkInspector.Objects
 //                        state.Content = null;
 
                     report.PagesProcessed++;
-                    Console.WriteLine(state);
+                    logger.Info(Resources.WebSpiderExecuteProcessedUrlsInfo, report.PagesProcessed, webPagesPending.Count,state);
                 }
 //            }
 //            catch (Exception ex)
@@ -77,7 +79,7 @@ namespace LinkInspector.Objects
 //            }
 
             report.EndTime = DateTime.Now;
-            Console.WriteLine(report.ToString(Report.ReportFormat.Footer));
+            logger.Info(report.ToString(Report.ReportFormat.Footer));
             return report;
         }
 

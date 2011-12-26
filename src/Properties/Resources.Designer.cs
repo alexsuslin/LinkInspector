@@ -133,7 +133,7 @@ namespace LinkInspector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0,4}/{1,-4}: .
+        ///   Looks up a localized string similar to {0,4}/{1,-4} {2} .
         /// </summary>
         internal static string WebSpiderExecuteProcessedUrlsInfo {
             get {

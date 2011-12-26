@@ -122,26 +122,31 @@
   </data>
   <data name="ReportGetFileContentCantReadError" xml:space="preserve">
     <value>{0} file could not be read:</value>
+    <comment>{0} - input path to file (e.g. html template)</comment>
   </data>
   <data name="GetHelpRunUsage" xml:space="preserve">
     <value>Usage: LinkInspector.exe -u "&lt;URL&gt;" [options]</value>
   </data>
   <data name="ParseUrlRunCantCreateUriError" xml:space="preserve">
     <value>Can't create Uri from the string specified: '{0}'</value>
+    <comment>{0} - user input uri</comment>
   </data>
   <data name="ParseUrlRunNotIntegerError" xml:space="preserve">
     <value>Input argument '{0}' is not an integer value and must be greater than 0.</value>
   </data>
   <data name="ParseUrlRunUnsupportedFormatError" xml:space="preserve">
     <value>Unsupported file format {0}</value>
+    <comment>{0} - user input file format</comment>
   </data>
   <data name="WebSpiderExecuteProcessedUrlsInfo" xml:space="preserve">
-    <value>{0,4}/{1,-4}: </value>
+    <value>{0,4}/{1,-4} {2} </value>
+    <comment>{0} - urls processed, {1} - urls in queue, {2} - other info (e.g. WebPageState string representation)</comment>
   </data>
   <data name="GetVersionRunCurrentVersionInfo" xml:space="preserve">
     <value>Returns the current version of the application.</value>
   </data>
-    <data name="GetVerionRunCurrentVersion">
-        <value xml:space="preserve">Current version: {0}</value>
-    </data>
+  <data name="GetVerionRunCurrentVersion" xml:space="preserve">
+    <value>Current version: {0}</value>
+    <comment>{0} - current assembly version</comment>
+  </data>
 </root>

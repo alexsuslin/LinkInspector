@@ -4,12 +4,15 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using LinkInspector.Properties;
+using NLog;
 using RazorEngine;
 
 namespace LinkInspector.Objects
 {
     public sealed class Report
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         #region Enums
 
         public enum ReportFormat
@@ -85,6 +88,7 @@ namespace LinkInspector.Objects
                     }
                     return sb;
                 case ReportFormat.Footer:
+                    sb.AppendLine();
                     sb.AppendLine("------------------------------------------------------------------------------------------------------");
                     sb.AppendLine("Pages Processed: " + PagesProcessed);
                     sb.AppendLine("Pages Pending  : " + PagesPending);
@@ -131,10 +135,10 @@ namespace LinkInspector.Objects
                     template = sr.ReadToEnd();
                 }
             }
-            catch (IOException e)
+            catch (IOException ex)
             {
-                Console.WriteLine(Resources.ReportGetFileContentCantReadError, path);
-                Console.WriteLine(e.Message);
+                logger.Error(Resources.ReportGetFileContentCantReadError, path);
+                logger.ErrorException(ex.Message, ex);
             }
             return template;
         }
