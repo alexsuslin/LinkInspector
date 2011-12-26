@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using LinkInspector.Properties;
 
 namespace LinkInspector.Objects
 {
@@ -53,9 +54,8 @@ namespace LinkInspector.Objects
                 while (webPagesPending.Count > 0 &&
                        (spiderOptions.UriProcessedCountMax == -1 || report.PagesProcessed < spiderOptions.UriProcessedCountMax))
                 {
-                    Console.Write("{0,4}/{1,-4}: ", report.PagesProcessed, webPagesPending.Count);
-                    var state = (WebPageState)webPagesPending.Dequeue();                    
-                    
+                    Console.Write(Resources.WebSpiderExecuteProcessedUrlsInfo, report.PagesProcessed, webPagesPending.Count);
+                    var state = (WebPageState)webPagesPending.Dequeue();
                     sw.Start();                    
                     spiderOptions.WebPageProcessor.Process(state);                    
                     sw.Stop();                    

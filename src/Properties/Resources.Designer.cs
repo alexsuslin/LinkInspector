@@ -63,54 +63,81 @@ namespace LinkInspector.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Returns the current version of the application..
         /// </summary>
-        internal static string GetHelp_GetHelp_CommandDescription {
+        internal static string GetHelpCommandDescription {
             get {
-                return ResourceManager.GetString("GetHelp_GetHelp_CommandDescription", resourceCulture);
+                return ResourceManager.GetString("GetHelpCommandDescription", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Usage: LinkInspector.exe -u &quot;&lt;URL&gt;&quot; [options].
         /// </summary>
-        internal static string GetHelp_Run_Usage {
+        internal static string GetHelpRunUsage {
             get {
-                return ResourceManager.GetString("GetHelp_Run_Usage", resourceCulture);
+                return ResourceManager.GetString("GetHelpRunUsage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current version: {0}.
+        /// </summary>
+        internal static string GetVerionRunCurrentVersion {
+            get {
+                return ResourceManager.GetString("GetVerionRunCurrentVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the current version of the application..
+        /// </summary>
+        internal static string GetVersionRunCurrentVersionInfo {
+            get {
+                return ResourceManager.GetString("GetVersionRunCurrentVersionInfo", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Can&apos;t create Uri from the string specified: &apos;{0}&apos;.
         /// </summary>
-        internal static string ParseUrl_Run_CantCreateUriError {
+        internal static string ParseUrlRunCantCreateUriError {
             get {
-                return ResourceManager.GetString("ParseUrl_Run_CantCreateUriError", resourceCulture);
+                return ResourceManager.GetString("ParseUrlRunCantCreateUriError", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Input argument &apos;{0}&apos; is not an integer value and must be greater than 0..
         /// </summary>
-        internal static string ParseUrl_Run_NotIntegerError {
+        internal static string ParseUrlRunNotIntegerError {
             get {
-                return ResourceManager.GetString("ParseUrl_Run_NotIntegerError", resourceCulture);
+                return ResourceManager.GetString("ParseUrlRunNotIntegerError", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Unsupported file format {0}.
         /// </summary>
-        internal static string ParseUrl_Run_UnsupportedFormatError {
+        internal static string ParseUrlRunUnsupportedFormatError {
             get {
-                return ResourceManager.GetString("ParseUrl_Run_UnsupportedFormatError", resourceCulture);
+                return ResourceManager.GetString("ParseUrlRunUnsupportedFormatError", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to {0} file could not be read:.
         /// </summary>
-        internal static string Report_GetFileContent_CantReadError {
+        internal static string ReportGetFileContentCantReadError {
             get {
-                return ResourceManager.GetString("Report_GetFileContent_CantReadError", resourceCulture);
+                return ResourceManager.GetString("ReportGetFileContentCantReadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0,4}/{1,-4}: .
+        /// </summary>
+        internal static string WebSpiderExecuteProcessedUrlsInfo {
+            get {
+                return ResourceManager.GetString("WebSpiderExecuteProcessedUrlsInfo", resourceCulture);
             }
         }
     }

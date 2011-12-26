@@ -133,7 +133,7 @@ namespace LinkInspector.Objects
             }
             catch (IOException e)
             {
-                Console.WriteLine(Resources.Report_GetFileContent_CantReadError, path);
+                Console.WriteLine(Resources.ReportGetFileContentCantReadError, path);
                 Console.WriteLine(e.Message);
             }
             return template;

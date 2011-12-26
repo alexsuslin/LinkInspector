@@ -117,22 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="GetHelp_GetHelp_CommandDescription" xml:space="preserve">
+  <data name="GetHelpCommandDescription" xml:space="preserve">
     <value>Returns the current version of the application.</value>
   </data>
-  <data name="Report_GetFileContent_CantReadError" xml:space="preserve">
+  <data name="ReportGetFileContentCantReadError" xml:space="preserve">
     <value>{0} file could not be read:</value>
   </data>
-    <data name="GetHelp_Run_Usage">
-        <value xml:space="preserve">Usage: LinkInspector.exe -u "&lt;URL&gt;" [options]</value>
-    </data>
-    <data name="ParseUrl_Run_CantCreateUriError">
-        <value xml:space="preserve">Can't create Uri from the string specified: '{0}'</value>
-    </data>
-    <data name="ParseUrl_Run_NotIntegerError">
-        <value xml:space="preserve">Input argument '{0}' is not an integer value and must be greater than 0.</value>
-    </data>
-    <data name="ParseUrl_Run_UnsupportedFormatError">
-        <value xml:space="preserve">Unsupported file format {0}</value>
+  <data name="GetHelpRunUsage" xml:space="preserve">
+    <value>Usage: LinkInspector.exe -u "&lt;URL&gt;" [options]</value>
+  </data>
+  <data name="ParseUrlRunCantCreateUriError" xml:space="preserve">
+    <value>Can't create Uri from the string specified: '{0}'</value>
+  </data>
+  <data name="ParseUrlRunNotIntegerError" xml:space="preserve">
+    <value>Input argument '{0}' is not an integer value and must be greater than 0.</value>
+  </data>
+  <data name="ParseUrlRunUnsupportedFormatError" xml:space="preserve">
+    <value>Unsupported file format {0}</value>
+  </data>
+  <data name="WebSpiderExecuteProcessedUrlsInfo" xml:space="preserve">
+    <value>{0,4}/{1,-4}: </value>
+  </data>
+  <data name="GetVersionRunCurrentVersionInfo" xml:space="preserve">
+    <value>Returns the current version of the application.</value>
+  </data>
+    <data name="GetVerionRunCurrentVersion">
+        <value xml:space="preserve">Current version: {0}</value>
     </data>
 </root>

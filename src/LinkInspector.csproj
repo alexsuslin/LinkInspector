@@ -61,9 +61,6 @@
     <DelaySign>false</DelaySign>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net">
-      <HintPath>..\packages\log4net.1.2.11\lib\net40-full\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="ManyConsole, Version=0.3.7.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\external\ManyConsole.0.3.7.0\ManyConsole.dll</HintPath>
@@ -72,13 +69,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\external\NDesk.Options.0.2.1\NDesk.Options.dll</HintPath>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\external\NLog.2.0.0.2000\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="RazorEngine, Version=3.0.5.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\external\RazorEngine.3.0.5\RazorEngine.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\GetHelp.cs" />
@@ -88,6 +87,7 @@
     <Compile Include="Objects\IWebPageProcessor.cs" />
     <Compile Include="Objects\RegExUtil.cs" />
     <Compile Include="Objects\Report.cs" />
+    <Compile Include="Objects\Timing.cs" />
     <Compile Include="Objects\WebPageContent.cs" />
     <Compile Include="Objects\WebPageProcessor.cs" />
     <Compile Include="Objects\WebPageState.cs" />

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using LinkInspector.Properties;
 using ManyConsole;
 
 namespace LinkInspector.Commands
@@ -9,12 +11,12 @@ namespace LinkInspector.Commands
         {
            
             Command = "-v";
-            OneLineDescription = "Returns the current version of the application.";
+            OneLineDescription = Resources.GetVersionRunCurrentVersionInfo;
         }
 
         public override int Run()
         {
-            Console.WriteLine("Current version: 0.1");
+            Console.WriteLine(Resources.GetVerionRunCurrentVersion, new AssemblyName(Assembly.GetExecutingAssembly().FullName).Version);
 
             return 0;
         }

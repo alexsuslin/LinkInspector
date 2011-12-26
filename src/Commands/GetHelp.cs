@@ -8,14 +8,13 @@ namespace LinkInspector.Commands
     {
         public GetHelp()
         {
-            OneLineDescription = Resources.GetHelp_GetHelp_CommandDescription;
+            OneLineDescription = Resources.GetHelpCommandDescription;
             Command = "-h";
-            //OneLineDescription = "An example of how to use this application.";
         }
 
         public override int Run()
         {
-            Console.WriteLine(Resources.GetHelp_Run_Usage);
+            Console.WriteLine(Resources.GetHelpRunUsage);
             return 0;
         }
     }

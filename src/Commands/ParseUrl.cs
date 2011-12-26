@@ -53,7 +53,7 @@ namespace LinkInspector.Commands
             Uri uri;
             if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
             {
-                Console.WriteLine(Resources.ParseUrl_Run_CantCreateUriError, url);
+                Console.WriteLine(Resources.ParseUrlRunCantCreateUriError, url);
                 return -1;
             }
 
@@ -61,13 +61,13 @@ namespace LinkInspector.Commands
 
             if (!string.IsNullOrEmpty(number) && (!Int32.TryParse(number, out count) || count < 1))
             {
-                Console.WriteLine(Resources.ParseUrl_Run_NotIntegerError, number);
+                Console.WriteLine(Resources.ParseUrlRunNotIntegerError, number);
                 return -1;
             }
 
             if (!string.IsNullOrEmpty(outputFileFormat) && fileFormat == Report.OutputFileFormat.none)
             {
-                Console.WriteLine(Resources.ParseUrl_Run_UnsupportedFormatError, outputFileFormat);
+                Console.WriteLine(Resources.ParseUrlRunUnsupportedFormatError, outputFileFormat);
                 return -1;
             }
 
