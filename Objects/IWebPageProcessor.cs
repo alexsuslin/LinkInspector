@@ -1,8 +1,8 @@
 namespace LinkInspector.Objects
 {
-    public interface IWebPageProcessor
+    internal interface IWebPageProcessor
     {
-        WebPageContentDelegate ContentHandler { get; set; }
+        WebPageContent ContentHandler { get; set; }
         bool Process(WebPageState state);
     }
 }

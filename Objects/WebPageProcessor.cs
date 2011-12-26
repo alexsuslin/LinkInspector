@@ -4,11 +4,11 @@ using System.Net;
 
 namespace LinkInspector.Objects
 {
-    public class WebPageProcessor : IWebPageProcessor
+    internal sealed class WebPageProcessor : IWebPageProcessor
     {
         #region Properties
 
-        public WebPageContentDelegate ContentHandler { get; set; }
+        public WebPageContent ContentHandler { get; set; }
 
         #endregion
 
@@ -39,44 +39,39 @@ namespace LinkInspector.Objects
             
 
             bool isRedirect = false;
-            
-            WebResponse response = null;
+
+            HttpWebResponse response = null;
 
             try
             {
-                response = request.GetResponse();
+                response = (HttpWebResponse)request.GetResponse();
 
                 if (redirect == null)
-                    state.StatusCode = ((HttpWebResponse)response).StatusCode;
+                    state.StatusCode = response.StatusCode;
                 else if (state.Redirects.Count > 0)
                 {
-                    state.Redirects[state.Redirects.Count - 1].StatusCode = ((HttpWebResponse) response).StatusCode;
+                    state.Redirects[state.Redirects.Count - 1].StatusCode = response.StatusCode;
                 }
 
-                state.StatusCodeDescription = ((HttpWebResponse)response).StatusDescription;
+                state.StatusCodeDescription = response.StatusDescription;
                 
-                if (response is HttpWebResponse && state.GetStatus(((HttpWebResponse)response).StatusCode) == WebPageState.PageStatus.Redirect)
+                if (WebPageState.GetStatus(response.StatusCode) == WebPageState.PageStatus.Redirect)
                 {
                     isRedirect = true;
                     requestUri = new Uri(response.Headers["Location"]);
                     state.Redirects.Add(new WebPageState.WebRequestState { Uri = requestUri});
                 }
-                else if (response is HttpWebResponse)
+                else
                 {
                     state.Content = new StreamReader(response.GetResponseStream()).ReadToEnd();
                 }
-                
             }
-            catch (Exception ex)
+            catch (WebException ex)
             {
                 //todo error handling
-                if (ex is WebException)
-                {
-                    WebException webEx = (WebException)ex;
-                    state.ExceptionStatus = webEx.Status;
-                    if (webEx.Response != null && webEx.Response is HttpWebResponse)
-                        state.StatusCode = ((HttpWebResponse)((WebException)ex).Response).StatusCode;
-                }
+                state.ExceptionStatus = ex.Status;
+                if (ex.Response != null && ex.Response is HttpWebResponse)
+                        state.StatusCode = ((HttpWebResponse)ex.Response).StatusCode;
             }
             finally
             {

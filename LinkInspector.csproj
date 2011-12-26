@@ -82,7 +82,7 @@
     <Compile Include="Objects\IWebPageProcessor.cs" />
     <Compile Include="Objects\RegExUtil.cs" />
     <Compile Include="Objects\Report.cs" />
-    <Compile Include="Objects\WebPageContentDelegate.cs" />
+    <Compile Include="Objects\WebPageContent.cs" />
     <Compile Include="Objects\WebPageProcessor.cs" />
     <Compile Include="Objects\WebPageState.cs" />
     <Compile Include="Objects\WebSpider.cs" />

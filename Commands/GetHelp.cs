@@ -4,20 +4,18 @@ using ManyConsole;
 
 namespace LinkInspector.Commands
 {
-    public class GetHelp : ConsoleCommand
+    internal sealed class GetHelp : ConsoleCommand
     {
         public GetHelp()
         {
-            OneLineDescription = Resources.Help;
-            
-            
+            OneLineDescription = Resources.GetHelp_GetHelp_CommandDescription;
             Command = "-h";
             //OneLineDescription = "An example of how to use this application.";
         }
 
         public override int Run()
         {
-            Console.WriteLine("Usage: LinkInspector.exe -u \"<URL>\" [options]");
+            Console.WriteLine(Resources.GetHelp_Run_Usage);
             return 0;
         }
     }

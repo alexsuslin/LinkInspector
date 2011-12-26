@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Text;
 
 namespace LinkInspector.Objects
 {
-    public sealed class WebPageState
+    public sealed  class WebPageState
     {
         #region Fields
 
@@ -18,7 +19,7 @@ namespace LinkInspector.Objects
 
         public string Content { get; set; }
 
-        public bool ProcessSuccessfull { get; set; }
+        //public bool ProcessSuccessfull { get; set; }
 
         public bool IsContinueProcess { get; set; }
 
@@ -94,18 +95,13 @@ namespace LinkInspector.Objects
             Redirects = new List<WebRequestState>();
         }
 
-        public WebPageState(string uri)
-            : this(new Uri(uri))
-        {
-        }
-
         #endregion
 
         #region Methods
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder(string.Format("[{0,5:F2}s] [{1}] : {2} ", ElapsedTimeSpan.TotalSeconds, (int)StatusCode, Uri));
+            StringBuilder sb = new StringBuilder(string.Format(CultureInfo.InvariantCulture, "[{0,5:F2}s] [{1}] : {2} ", ElapsedTimeSpan.TotalSeconds, (int)StatusCode, Uri));
             if(Redirects.Count > 0)
                 foreach (WebRequestState redirect in Redirects)
                 {
@@ -114,7 +110,7 @@ namespace LinkInspector.Objects
             return sb.ToString();
         }
 
-        public PageStatus GetStatus(HttpStatusCode httpStatusCode)
+        public static PageStatus GetStatus(HttpStatusCode httpStatusCode)
         {
             int statusNumber = (int)httpStatusCode;
 

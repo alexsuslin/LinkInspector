@@ -63,9 +63,54 @@ namespace LinkInspector.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Returns the current version of the application..
         /// </summary>
-        internal static string Help {
+        internal static string GetHelp_GetHelp_CommandDescription {
             get {
-                return ResourceManager.GetString("Help", resourceCulture);
+                return ResourceManager.GetString("GetHelp_GetHelp_CommandDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usage: LinkInspector.exe -u &quot;&lt;URL&gt;&quot; [options].
+        /// </summary>
+        internal static string GetHelp_Run_Usage {
+            get {
+                return ResourceManager.GetString("GetHelp_Run_Usage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can&apos;t create Uri from the string specified: &apos;{0}&apos;.
+        /// </summary>
+        internal static string ParseUrl_Run_CantCreateUriError {
+            get {
+                return ResourceManager.GetString("ParseUrl_Run_CantCreateUriError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input argument &apos;{0}&apos; is not an integer value and must be greater than 0..
+        /// </summary>
+        internal static string ParseUrl_Run_NotIntegerError {
+            get {
+                return ResourceManager.GetString("ParseUrl_Run_NotIntegerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unsupported file format {0}.
+        /// </summary>
+        internal static string ParseUrl_Run_UnsupportedFormatError {
+            get {
+                return ResourceManager.GetString("ParseUrl_Run_UnsupportedFormatError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} file could not be read:.
+        /// </summary>
+        internal static string Report_GetFileContent_CantReadError {
+            get {
+                return ResourceManager.GetString("Report_GetFileContent_CantReadError", resourceCulture);
             }
         }
     }

@@ -149,7 +149,7 @@ $("tfoot th.select").each( function ( i ) {
             {
                 <tr class="@state.Status">
                     <td>@((int)state.StatusCode)</td>
-                    <td>@state.StatusCode</td>
+                    <td>@state.StatusCodeDescription</td>
                     <td>@state.ElapsedTimeSpan.TotalSeconds.ToString("F2")</td>
                     <td>
                         <a href="@state.Uri.AbsoluteUri">@TrimLongUrl(state.Uri.AbsoluteUri)</a>

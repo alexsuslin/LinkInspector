@@ -2,25 +2,13 @@
 
 namespace LinkInspector.Objects
 {
-    public static class Config
+
+    internal static class Config
     {
         #region Properties
-
-        public static string UserAgent { get; private set; }
-        private const string UserAgentDefault = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.0.3705)";
-
-        public static string HtmlTemplate { get; private set; }
-        private const string HtmlTemplateDefault = "Templates\\ReportTemplate.html";
-
-        #endregion
-
-        #region Constructors
-
-        static Config()
-        {
-            UserAgent = AppConfig.AppSettings["UserAgent"] ?? UserAgentDefault;
-            HtmlTemplate = AppConfig.AppSettings["HtmlTemplate"] ?? HtmlTemplateDefault;
-        }
+        
+        internal static string UserAgent = AppConfig.AppSettings["UserAgent"] ?? "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.0.3705)";
+        internal static string HtmlTemplate = AppConfig.AppSettings["HtmlTemplate"] ?? "Templates\\ReportTemplate.html";
 
         #endregion
     }

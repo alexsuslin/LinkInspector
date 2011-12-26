@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Resources;
 using ManyConsole;
 
 namespace LinkInspector.Commands
 {
-    public class GetVerion : ConsoleCommand
+    internal sealed class GetVerion : ConsoleCommand
     {
         public GetVerion()
         {

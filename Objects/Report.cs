@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
+using LinkInspector.Properties;
 using RazorEngine;
 
 namespace LinkInspector.Objects
 {
-    public class Report
+    public sealed class Report
     {
         #region Enums
 
@@ -71,7 +73,7 @@ namespace LinkInspector.Objects
                 case ReportFormat.Head:
                     sb.AppendLine("======================================================================================================");
                     sb.AppendLine("Proccess URI: " + StartUri.AbsoluteUri);
-                    sb.AppendLine("Start At    : " + StartTime.ToString("yyyy-MM-dd hh:mm:ss"));
+                    sb.AppendLine("Start At    : " + StartTime.ToString("yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture));
                     sb.AppendLine("------------------------------------------------------------------------------------------------------");
                     return sb;
                 case ReportFormat.Body:
@@ -79,15 +81,15 @@ namespace LinkInspector.Objects
                     int count = PageStates.Count;
                     foreach (WebPageState state in PageStates)
                     {
-                        sb.AppendLine(String.Format("{0,4}/{1,-4}: {2}", ++index, count, state));
+                        sb.AppendLine(String.Format(CultureInfo.InvariantCulture,"{0,4}/{1,-4}: {2}", ++index, count, state));
                     }
                     return sb;
                 case ReportFormat.Footer:
                     sb.AppendLine("------------------------------------------------------------------------------------------------------");
                     sb.AppendLine("Pages Processed: " + PagesProcessed);
                     sb.AppendLine("Pages Pending  : " + PagesPending);
-                    sb.AppendLine("End At         : " + EndTime.ToString("yyyy-MM-dd hh:mm:ss"));
-                    sb.AppendLine(String.Format("Elasped Time   : {0}h {1}m {2}s {3}ms", ElapsedTime.Hours,
+                    sb.AppendLine("End At         : " + EndTime.ToString("yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture));
+                    sb.AppendLine(String.Format(CultureInfo.InvariantCulture, "Elasped Time   : {0}h {1}m {2}s {3}ms", ElapsedTime.Hours,
                                                 ElapsedTime.Minutes, ElapsedTime.Seconds, ElapsedTime.Milliseconds));
                     sb.AppendLine("======================================================================================================");
                     return sb;
@@ -113,13 +115,13 @@ namespace LinkInspector.Objects
                 default:
                     return;
             }
-            using (StreamWriter outfile = new StreamWriter(string.Format("{0}_{1}.{2}", StartUri.DnsSafeHost, DateTime.Now.ToString("yyy-MM-dd_hh-mm-ss"), fileFormat)))
+            using (StreamWriter outfile = new StreamWriter(string.Format(CultureInfo.InvariantCulture, "{0}_{1}.{2}", StartUri.DnsSafeHost, DateTime.Now.ToString("yyy-MM-dd_hh-mm-ss", CultureInfo.InvariantCulture), fileFormat)))
             {
                 outfile.Write(rb.ToString());
             }
         }
 
-        private string GetFileContent(string path)
+        private static string GetFileContent(string path)
         {
             string template = string.Empty;
             try
@@ -129,9 +131,9 @@ namespace LinkInspector.Objects
                     template = sr.ReadToEnd();
                 }
             }
-            catch (Exception e)
+            catch (IOException e)
             {
-                Console.WriteLine("{0} file could not be read:", path);
+                Console.WriteLine(Resources.Report_GetFileContent_CantReadError, path);
                 Console.WriteLine(e.Message);
             }
             return template;

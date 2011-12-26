@@ -2,15 +2,13 @@
 
 namespace LinkInspector.Objects
 {
-    public class WebSpiderOptions
+    internal sealed class WebSpiderOptions
     {
         #region Properties
 
         public Uri BaseUri { get; set; }
 
         public int UriProcessedCountMax { get; set; }
-
-        public bool KeepWebContent { get; set; }
 
         public IWebPageProcessor WebPageProcessor { get; set; }
 
@@ -24,7 +22,6 @@ namespace LinkInspector.Objects
         {
             BaseUri = null;
             UriProcessedCountMax = -1;
-            KeepWebContent = false;
             WebPageProcessor = new WebPageProcessor();
             ShowSuccessUrls = true;
         }

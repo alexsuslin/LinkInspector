@@ -1,11 +1,12 @@
 ﻿using System;
 using LinkInspector.Objects;
+using LinkInspector.Properties;
 using ManyConsole;
 using NDesk.Options;
 
 namespace LinkInspector.Commands
 {
-    public class ParseUrl : ConsoleCommand
+    internal sealed class ParseUrl : ConsoleCommand
     {
         private string url;
         private string number;
@@ -52,7 +53,7 @@ namespace LinkInspector.Commands
             Uri uri;
             if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
             {
-                Console.WriteLine("Can't create Uri from the string specified: '{0}'", url);
+                Console.WriteLine(Resources.ParseUrl_Run_CantCreateUriError, url);
                 return -1;
             }
 
@@ -60,13 +61,13 @@ namespace LinkInspector.Commands
 
             if (!string.IsNullOrEmpty(number) && (!Int32.TryParse(number, out count) || count < 1))
             {
-                Console.WriteLine("Input argument '{0}' is not an integer value and must be greater than 0.", number);
+                Console.WriteLine(Resources.ParseUrl_Run_NotIntegerError, number);
                 return -1;
             }
 
             if (!string.IsNullOrEmpty(outputFileFormat) && fileFormat == Report.OutputFileFormat.none)
             {
-                Console.WriteLine("Unsupported file format {0}", outputFileFormat);
+                Console.WriteLine(Resources.ParseUrl_Run_UnsupportedFormatError, outputFileFormat);
                 return -1;
             }
 

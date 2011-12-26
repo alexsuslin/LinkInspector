@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace LinkInspector.Objects
 {
-    public class WebSpider
+    internal sealed class WebSpider
     {
         #region Fields
 
@@ -22,12 +22,6 @@ namespace LinkInspector.Objects
         #endregion
 
         #region Constructors
-
-        public WebSpider(string startUri, WebSpiderOptions options = null) : 
-            this (new Uri(startUri), options)
-        {
-        }
-
 
         public WebSpider(Uri startUri, WebSpiderOptions options = null)
         {
@@ -54,8 +48,8 @@ namespace LinkInspector.Objects
 
             AddWebPage(StartUri, StartUri.AbsoluteUri);
             Stopwatch sw = new Stopwatch();
-            try
-            { 
+//            try
+//            { 
                 while (webPagesPending.Count > 0 &&
                        (spiderOptions.UriProcessedCountMax == -1 || report.PagesProcessed < spiderOptions.UriProcessedCountMax))
                 {
@@ -76,11 +70,11 @@ namespace LinkInspector.Objects
                     report.PagesProcessed++;
                     Console.WriteLine(state);
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Failure while running web spider: " + ex);
-            }
+//            }
+//            catch (Exception ex)
+//            {
+//                Console.WriteLine("Failure while running web spider: " + ex);
+//            }
 
             report.EndTime = DateTime.Now;
             Console.WriteLine(report.ToString(Report.ReportFormat.Footer));
@@ -89,7 +83,7 @@ namespace LinkInspector.Objects
 
         public void HandleLinks(WebPageState state)
         {
-            if (state.IsContinueProcess)
+            if (state != null && state.IsContinueProcess)
             {
                 Match m = RegExUtil.GetMatchRegEx(state.Content);
                 do 
@@ -101,7 +95,7 @@ namespace LinkInspector.Objects
         private void AddWebPage(Uri baseUri, string newUri)
         {
             // Remove any anchors
-            int index = newUri.IndexOf("#");
+            int index = newUri.IndexOf("#", StringComparison.OrdinalIgnoreCase);
             string url = (!string.IsNullOrEmpty(newUri) && index > 0) ? newUri.Substring(0, index) : newUri;
 
             var uri = new Uri(baseUri, url);
@@ -111,7 +105,7 @@ namespace LinkInspector.Objects
 
             var state = new WebPageState(uri)
                             {
-                                IsContinueProcess = uri.AbsoluteUri.StartsWith(spiderOptions.BaseUri.AbsoluteUri)
+                                IsContinueProcess = uri.AbsoluteUri.StartsWith(spiderOptions.BaseUri.AbsoluteUri, StringComparison.OrdinalIgnoreCase)
                             };
 
             webPagesPending.Enqueue(state);
