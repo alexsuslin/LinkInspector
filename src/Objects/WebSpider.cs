@@ -51,31 +51,22 @@ namespace LinkInspector.Objects
 
             AddWebPage(StartUri, StartUri.AbsoluteUri);
             Stopwatch sw = new Stopwatch();
-//            try
-//            { 
-                while (webPagesPending.Count > 0 &&
-                       (spiderOptions.UriProcessedCountMax == -1 || report.PagesProcessed < spiderOptions.UriProcessedCountMax))
-                {
-                    WebPageState state = (WebPageState)webPagesPending.Dequeue();
-                    sw.Start();                    
-                    spiderOptions.WebPageProcessor.Process(state);                    
-                    sw.Stop();                    
+            while (webPagesPending.Count > 0 &&
+                   (spiderOptions.UriProcessedCountMax == -1 || report.PagesProcessed < spiderOptions.UriProcessedCountMax))
+            {
+                WebPageState state = (WebPageState) webPagesPending.Dequeue();
+                sw.Start();
+                spiderOptions.WebPageProcessor.Process(state);
+                sw.Stop();
 
-                    state.ElapsedTimeSpan = sw.Elapsed;
-                    if (spiderOptions.ShowSuccessUrls || !state.IsOk)
-                        report.PageStates.Add(state);
+                state.ElapsedTimeSpan = sw.Elapsed;
+                if (spiderOptions.ShowSuccessUrls || !state.IsOk)
+                    report.PageStates.Add(state);
 
-//                    if (!spiderOptions.KeepWebContent)
-//                        state.Content = null;
 
-                    report.PagesProcessed++;
-                    Logger.Info(Resources.WebSpiderExecuteProcessedUrlsInfo, report.PagesProcessed, webPagesPending.Count,state);
-                }
-//            }
-//            catch (Exception ex)
-//            {
-//                Console.WriteLine("Failure while running web spider: " + ex);
-//            }
+                report.PagesProcessed++;
+                Logger.Info(Resources.WebSpiderExecuteProcessedUrlsInfo, report.PagesProcessed, webPagesPending.Count, state);
+            }
 
             report.EndTime = DateTime.Now;
             Logger.Info(report.ToString(Report.ReportFormat.Footer));

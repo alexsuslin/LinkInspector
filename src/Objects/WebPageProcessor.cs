@@ -13,7 +13,14 @@ namespace LinkInspector.Objects
 
         public WebPageContent ContentHandler { get; set; }
 
+        public WebSpiderOptions Options { get; set; }
+
         #endregion
+
+        public WebPageProcessor(WebSpiderOptions options = null)
+        {
+            Options = options;
+        }
 
         #region Interface Implementation
 
@@ -39,7 +46,9 @@ namespace LinkInspector.Objects
             request.Method = "GET";
             request.UserAgent = Config.UserAgent;
             request.AllowAutoRedirect = false;
-            
+
+            if (Options != null && Options.Credential != null)
+                request.Credentials = Options.Credential;
 
             bool isRedirect = false;
 
@@ -74,10 +83,12 @@ namespace LinkInspector.Objects
             }
             catch (WebException ex)
             {
-                state.ExceptionStatus = ex.Status;
-                Logger.LogException(LogLevel.Fatal, ex.Message, ex);
+                Logger.LogException(LogLevel.Fatal, ex.Status.ToString(), ex);
                 if (ex.Response != null && ex.Response is HttpWebResponse)
-                        state.StatusCode = ((HttpWebResponse)ex.Response).StatusCode;
+                {
+                    state.StatusCode = ((HttpWebResponse)ex.Response).StatusCode;
+                    state.StatusCodeDescription = ((HttpWebResponse) ex.Response).StatusDescription;
+                }
             }
             finally
             {

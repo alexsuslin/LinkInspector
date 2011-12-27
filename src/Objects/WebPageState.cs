@@ -25,8 +25,6 @@ namespace LinkInspector.Objects
 
         public PageStatus Status { get; set; }
 
-        public WebExceptionStatus ExceptionStatus { get; set; }
-
         public TimeSpan ElapsedTimeSpan { get; set; }
 
         public Uri Uri

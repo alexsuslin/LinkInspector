@@ -14,6 +14,9 @@ namespace LinkInspector.Commands
         private string number;
         private string outputFileFormat;
         private string htmlTemplate;
+        private string username;
+        private string password;
+        private string domain;
         private bool  errorsOnly;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -41,7 +44,10 @@ namespace LinkInspector.Commands
                               {"n|number=", "Number of links to check", v => number = v},
                               {"ff|file-format=", "Result fileFormat format [txt|html]", v => outputFileFormat = v},
                               {"t|template=", "Path to file template", v => htmlTemplate = v},
-                              {"e|errors", "Do not show successfully parsed links", v => errorsOnly = v!= null}
+                              {"e|errors", "Do not show successfully parsed links", v => errorsOnly = v!= null},
+                              {"l|login=", "Login/Username", v => username = v},
+                              {"p|password=", "Passoword", v => password = v},
+                              {"d|domain=", "Domain", v => domain = v}
                           };
         }
 
@@ -75,7 +81,21 @@ namespace LinkInspector.Commands
                 return -1;
             }
 
-            WebSpiderOptions options = new WebSpiderOptions {UriProcessedCountMax = count, ShowSuccessUrls = !errorsOnly};
+            if(string.IsNullOrEmpty(username) != string.IsNullOrEmpty(password))
+            {
+                Logger.Error("Username and Password should be both set.");
+                return -1;
+            }
+
+
+            WebSpiderOptions options = new WebSpiderOptions
+                                           {
+                                               UriProcessedCountMax = count,
+                                               ShowSuccessUrls = !errorsOnly,
+                                               Username = username,
+                                               Password = password,
+                                               Domain = domain
+                                           };
            
             Report report = new WebSpider(uri, options).Execute();
             if (FileFormat != Report.OutputFileFormat.None)
