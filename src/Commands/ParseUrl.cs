@@ -61,6 +61,12 @@ namespace LinkInspector.Commands
         public override int Run()
         {
             Uri uri;
+            
+            url = url.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || 
+                  url.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+                      ? url
+                      : string.Format(CultureInfo.InvariantCulture, "http://{0}", url);
+            
             if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
             {
                 Logger.Error(CultureInfo.CurrentUICulture, Resources.ParseUrlRunCantCreateUriError);
