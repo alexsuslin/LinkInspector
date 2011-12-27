@@ -118,35 +118,35 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="GetHelpCommandDescription" xml:space="preserve">
-    <value>Show the help how to use this application.</value>
+    <value>Показать как использовать это приложения.</value>
   </data>
   <data name="ReportGetFileContentCantReadError" xml:space="preserve">
-    <value>{0} file could not be read:</value>
-    <comment>{0} - input path to file (e.g. html template)</comment>
+    <value>{0} файл не может быть прочитан:</value>
+    <comment>{0} - введеный путь к файлу (например html шаблон)</comment>
   </data>
   <data name="GetHelpRunUsage" xml:space="preserve">
-    <value>Usage: LinkInspector.exe -u "&lt;URL&gt;" [options]</value>
+    <value>Использование: LinkInspector.exe -u "&lt;URL&gt;" [опции]</value>
   </data>
   <data name="ParseUrlRunCantCreateUriError" xml:space="preserve">
-    <value>Can't create Uri from the string specified: '{0}'</value>
-    <comment>{0} - user input uri</comment>
+    <value>Невозможно создать запрос по ссылке: '{0}'</value>
+    <comment>{0} - URI введенная пользвателем</comment>
   </data>
   <data name="ParseUrlRunNotIntegerError" xml:space="preserve">
-    <value>Input argument '{0}' is not an integer value and must be greater than 0.</value>
+    <value>Введенный аргумент '{0}' не является числом, либо он меньше 0.</value>
   </data>
   <data name="ParseUrlRunUnsupportedFormatError" xml:space="preserve">
-    <value>Unsupported file format {0}</value>
-    <comment>{0} - user input file format</comment>
+    <value>Не поддерживаемый формат репорта {0}</value>
+    <comment>{0} - формат репорта введенный пользвателем</comment>
   </data>
   <data name="WebSpiderExecuteProcessedUrlsInfo" xml:space="preserve">
     <value>{0,4}/{1,-4} {2} </value>
-    <comment>{0} - urls processed, {1} - urls in queue, {2} - other info (e.g. WebPageState string representation)</comment>
+    <comment>{0} - обработанные ссылки, {1} - ссылки в очереди, {2} - другая информация (например WebPageState в текстовом виде)</comment>
   </data>
   <data name="GetVersionRunCurrentVersionInfo" xml:space="preserve">
-    <value>Returns the current version of the application.</value>
+    <value>Возвращает текущую версию приложения</value>
   </data>
   <data name="GetVerionRunCurrentVersion" xml:space="preserve">
-    <value>Current version: {0}</value>
-    <comment>{0} - current assembly version</comment>
+    <value>Текущая версия: {0}</value>
+    <comment>{0} - текущая версия сборки</comment>
   </data>
 </root>

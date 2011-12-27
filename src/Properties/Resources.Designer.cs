@@ -61,7 +61,7 @@ namespace LinkInspector.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Returns the current version of the application..
+        ///   Looks up a localized string similar to Show the help how to use this application..
         /// </summary>
         internal static string GetHelpCommandDescription {
             get {

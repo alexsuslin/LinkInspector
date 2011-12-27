@@ -14,7 +14,7 @@
 
         static Config()
         {
-            if (!int.TryParse(AppConfig.AppSettings["ProcessUrlNumber"], out ProcessUrlNumber))
+            if (!int.TryParse(AppConfig.AppSettings["ProcessUrlNumber"], out ProcessUrlNumber) || ProcessUrlNumber < 0)
                 ProcessUrlNumber = -1;
         }
     }

@@ -74,7 +74,7 @@ namespace LinkInspector.Objects
                     requestUri = new Uri(response.Headers["Location"]);
                     state.Redirects.Add(new WebPageState.WebRequestState { Uri = requestUri});
                 }
-                else if (response.ContentType.StartsWith("text"))
+                else if (response.ContentType.StartsWith("text", StringComparison.OrdinalIgnoreCase))
                 {
                     Stream stream = response.GetResponseStream();
                     if (stream != null)
