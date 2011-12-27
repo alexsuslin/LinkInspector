@@ -99,7 +99,7 @@ namespace LinkInspector.Objects
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder(string.Format(CultureInfo.InvariantCulture, "[{0,5:F2}s] [{1}] : {2} ", ElapsedTimeSpan.TotalSeconds, (int)StatusCode, Uri));
+            StringBuilder sb = new StringBuilder(string.Format(CultureInfo.CurrentUICulture, "[{0,5:F2}s] [{1}] : {2} ", ElapsedTimeSpan.TotalSeconds, (int)StatusCode, Uri));
             if(Redirects.Count > 0)
                 foreach (WebRequestState redirect in Redirects)
                 {

@@ -19,7 +19,7 @@ namespace LinkInspector.Objects
 
         public Timing(string description, params string[] args)
         {
-            this.description = string.Format(description, args, CultureInfo.InvariantCulture);
+            this.description = string.Format(description, args, CultureInfo.CurrentUICulture);
         }
 
         #endregion

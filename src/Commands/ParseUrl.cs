@@ -63,7 +63,7 @@ namespace LinkInspector.Commands
             Uri uri;
             if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
             {
-                Logger.Error(CultureInfo.InvariantCulture, Resources.ParseUrlRunCantCreateUriError);
+                Logger.Error(CultureInfo.CurrentUICulture, Resources.ParseUrlRunCantCreateUriError);
                 return -1;
             }
 

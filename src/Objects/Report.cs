@@ -76,7 +76,7 @@ namespace LinkInspector.Objects
                 case ReportFormat.Head:
                     sb.AppendLine("======================================================================================================");
                     sb.AppendLine("Proccess URI: " + StartUri.AbsoluteUri);
-                    sb.AppendLine("Start At    : " + StartTime.ToString("yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture));
+                    sb.AppendLine("Start At    : " + StartTime.ToString("yyyy-MM-dd hh:mm:ss", CultureInfo.CurrentUICulture));
                     sb.AppendLine("------------------------------------------------------------------------------------------------------");
                     return sb;
                 case ReportFormat.Body:
@@ -84,7 +84,7 @@ namespace LinkInspector.Objects
                     int count = PageStates.Count;
                     foreach (WebPageState state in PageStates)
                     {
-                        sb.AppendLine(String.Format(CultureInfo.InvariantCulture,"{0,4}/{1,-4}: {2}", ++index, count, state));
+                        sb.AppendLine(String.Format(CultureInfo.CurrentUICulture,"{0,4}/{1,-4}: {2}", ++index, count, state));
                     }
                     return sb;
                 case ReportFormat.Footer:
@@ -92,8 +92,8 @@ namespace LinkInspector.Objects
                     sb.AppendLine("------------------------------------------------------------------------------------------------------");
                     sb.AppendLine("Pages Processed: " + PagesProcessed);
                     sb.AppendLine("Pages Pending  : " + PagesPending);
-                    sb.AppendLine("End At         : " + EndTime.ToString("yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture));
-                    sb.AppendLine(String.Format(CultureInfo.InvariantCulture, "Elasped Time   : {0}h {1}m {2}s {3}ms", ElapsedTime.Hours,
+                    sb.AppendLine("End At         : " + EndTime.ToString("yyyy-MM-dd hh:mm:ss", CultureInfo.CurrentUICulture));
+                    sb.AppendLine(String.Format(CultureInfo.CurrentUICulture, "Elasped Time   : {0}h {1}m {2}s {3}ms", ElapsedTime.Hours,
                                                 ElapsedTime.Minutes, ElapsedTime.Seconds, ElapsedTime.Milliseconds));
                     sb.AppendLine("======================================================================================================");
                     return sb;
@@ -119,7 +119,7 @@ namespace LinkInspector.Objects
                 default:
                     return;
             }
-            using (StreamWriter outfile = new StreamWriter(string.Format(CultureInfo.InvariantCulture, "{0}_{1}.{2}", StartUri.DnsSafeHost, DateTime.Now.ToString("yyy-MM-dd_hh-mm-ss", CultureInfo.InvariantCulture), fileFormat)))
+            using (StreamWriter outfile = new StreamWriter(string.Format(CultureInfo.CurrentUICulture, "{0}_{1}.{2}", StartUri.DnsSafeHost, DateTime.Now.ToString("yyy-MM-dd_hh-mm-ss", CultureInfo.CurrentUICulture), fileFormat)))
             {
                 outfile.Write(rb.ToString());
             }
@@ -137,7 +137,7 @@ namespace LinkInspector.Objects
             }
             catch (IOException ex)
             {
-                Logger.Error(Resources.ReportGetFileContentCantReadError, path);
+                Logger.Error(CultureInfo.CurrentUICulture,Resources.ReportGetFileContentCantReadError, path);
                 Logger.ErrorException(ex.Message, ex);
             }
             return template;
