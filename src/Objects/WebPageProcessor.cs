@@ -1,11 +1,14 @@
 using System;
 using System.IO;
 using System.Net;
+using NLog;
 
 namespace LinkInspector.Objects
 {
     internal sealed class WebPageProcessor : IWebPageProcessor
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         #region Properties
 
         public WebPageContent ContentHandler { get; set; }
@@ -62,7 +65,7 @@ namespace LinkInspector.Objects
                     requestUri = new Uri(response.Headers["Location"]);
                     state.Redirects.Add(new WebPageState.WebRequestState { Uri = requestUri});
                 }
-                else
+                else if (response.ContentType.StartsWith("text"))
                 {
                     Stream stream = response.GetResponseStream();
                     if (stream != null)
@@ -71,8 +74,8 @@ namespace LinkInspector.Objects
             }
             catch (WebException ex)
             {
-                //todo error handling
                 state.ExceptionStatus = ex.Status;
+                Logger.LogException(LogLevel.Fatal, ex.Message, ex);
                 if (ex.Response != null && ex.Response is HttpWebResponse)
                         state.StatusCode = ((HttpWebResponse)ex.Response).StatusCode;
             }
