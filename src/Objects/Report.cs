@@ -31,12 +31,33 @@ namespace LinkInspector.Objects
 
         #endregion
 
+        private int pagesProcessed;
+
         #region Properties
 
         public Uri StartUri { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public int PagesProcessed { get; set; }
+
+        private readonly object PagesProcessedSync = new object();
+        public int PagesProcessed
+        {
+            get
+            {
+                lock (PagesProcessedSync)
+                {
+                    return pagesProcessed;
+                }
+            }
+            set
+            {
+                lock (PagesProcessedSync)
+                {
+                    pagesProcessed = value;
+                }
+            }
+        }
+
         public int PagesPending { get; set; }
         public List<WebPageState> PageStates { get; set; }
 

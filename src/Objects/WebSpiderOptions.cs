@@ -30,6 +30,13 @@ namespace LinkInspector.Objects
             }
         }
 
+        private int numberOfThreads;
+        public int NumberOfThreads
+        {
+            get { return numberOfThreads;  }
+            set { numberOfThreads = value > UriProcessedCountMax ? UriProcessedCountMax : value; }
+        }
+
         public static SecureString ToSecureString(string str)
         {
             SecureString secure = new SecureString();
@@ -49,6 +56,7 @@ namespace LinkInspector.Objects
             UriProcessedCountMax = -1;
             WebPageProcessor = new WebPageProcessor(this);
             ShowSuccessUrls = true;
+            numberOfThreads = 1;
         }
 
         #endregion

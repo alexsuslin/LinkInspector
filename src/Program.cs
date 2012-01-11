@@ -11,6 +11,8 @@ namespace LinkInspector
             Console.OutputEncoding = Encoding.UTF8;
             var commands = ConsoleCommandDispatcher.FindCommandsInSameAssemblyAs(typeof (App));
             ConsoleCommandDispatcher.DispatchCommand(commands, args, Console.Out);
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
         }
     }
 }

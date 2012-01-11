@@ -17,6 +17,7 @@ namespace LinkInspector.Commands
         private string username;
         private string password;
         private string domain;
+        private string threads;
         private bool  errorsOnly;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -47,7 +48,8 @@ namespace LinkInspector.Commands
                               {"e|errors", "Do not show successfully parsed links", v => errorsOnly = v!= null},
                               {"l|login=", "Login/Username", v => username = v},
                               {"p|password=", "Passoword", v => password = v},
-                              {"d|domain=", "Domain", v => domain = v}
+                              {"d|domain=", "Domain", v => domain = v},
+                              {"th|threads=", "Domain", v => threads = v}
                           };
         }
 
@@ -93,6 +95,14 @@ namespace LinkInspector.Commands
                 return -1;
             }
 
+            int threadsNumber = 1;
+            if (!string.IsNullOrEmpty(threads) && (!Int32.TryParse(threads, out threadsNumber) || threadsNumber < 1))
+            {
+                Logger.Error(Resources.ParseUrlRunNotIntegerError, number);
+                return -1;
+            }
+
+
 
             WebSpiderOptions options = new WebSpiderOptions
                                            {
@@ -100,7 +110,8 @@ namespace LinkInspector.Commands
                                                ShowSuccessUrls = !errorsOnly,
                                                Username = username,
                                                Password = password,
-                                               Domain = domain
+                                               Domain = domain,
+                                               NumberOfThreads = threadsNumber
                                            };
            
             Report report = new WebSpider(uri, options).Execute();

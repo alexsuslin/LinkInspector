@@ -4,6 +4,6 @@ namespace LinkInspector.Objects
     {
         WebPageContent ContentHandler { get; set; }
         WebSpiderOptions Options { get; set; }
-        bool Process(WebPageState state);
+        bool Process(WebPageState state, bool b = true);
     }
 }

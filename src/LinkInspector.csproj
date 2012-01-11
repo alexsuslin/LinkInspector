@@ -80,6 +80,7 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CheckFile.cs" />
     <Compile Include="Commands\GetHelp.cs" />
     <Compile Include="Commands\ParseUrl.cs" />
     <Compile Include="Commands\GetVerion.cs" />
@@ -154,6 +155,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

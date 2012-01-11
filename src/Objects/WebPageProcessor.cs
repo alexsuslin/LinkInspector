@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using NLog;
@@ -24,10 +26,9 @@ namespace LinkInspector.Objects
 
         #region Interface Implementation
 
-        public bool Process(WebPageState state)
+        public bool Process(WebPageState state, bool checkRedirects = true)
         {
-            WebResponse response = GetDestinationResponse(state);
-
+            WebResponse response = GetDestinationResponse(state, null, checkRedirects);
             bool isProcessSuccessfull =
                 response != null &&
                 state.IsOk &&
@@ -39,7 +40,7 @@ namespace LinkInspector.Objects
             return isProcessSuccessfull;
         }
 
-        private WebResponse GetDestinationResponse(WebPageState state, Uri redirect = null)
+        private WebResponse GetDestinationResponse(WebPageState state, Uri redirect = null, bool checkRedirects = true)
         {
             Uri requestUri = redirect ?? state.Uri;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUri);
@@ -56,7 +57,13 @@ namespace LinkInspector.Objects
 
             try
             {
-                if ((response = request.GetResponse() as HttpWebResponse) == null)
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                response = request.GetResponse() as HttpWebResponse;
+                sw.Stop();
+                state.ElapsedTimeSpan = sw.Elapsed;
+
+                if (response == null)
                     return null;
                 
                 if (redirect == null)
@@ -68,10 +75,20 @@ namespace LinkInspector.Objects
 
                 state.StatusCodeDescription = response.StatusDescription;
                 
-                if (WebPageState.GetStatus(response.StatusCode) == WebPageState.PageStatus.Redirect)
+                if (WebPageState.GetStatus(response.StatusCode) == WebPageState.PageStatus.Redirect && checkRedirects)
                 {
                     isRedirect = true;
-                    requestUri = new Uri(response.Headers["Location"]);
+                    //todo check for URI format
+                    string url = response.Headers["Location"];
+                    
+
+                    url = url.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
+                          url.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+                              ? url
+                              : string.Format(CultureInfo.InvariantCulture, "{0}/{1}", Options.BaseUri, url);
+                    Logger.Error(url);
+                    requestUri = new Uri(url);
+
                     state.Redirects.Add(new WebPageState.WebRequestState { Uri = requestUri});
                 }
                 else if (response.ContentType.StartsWith("text", StringComparison.OrdinalIgnoreCase))
@@ -96,7 +113,7 @@ namespace LinkInspector.Objects
                     response.Close();
             }
 
-            return isRedirect ? GetDestinationResponse(state, requestUri) : response;
+            return isRedirect && checkRedirects ? GetDestinationResponse(state, requestUri) : response;
         }
 
         #endregion

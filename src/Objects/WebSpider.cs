@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Text.RegularExpressions;
-using System.Diagnostics;
+using System.Threading;
 using LinkInspector.Properties;
 using NLog;
 
@@ -12,6 +12,9 @@ namespace LinkInspector.Objects
         #region Fields
 
         private readonly Queue webPagesPending;
+
+
+
         private readonly Hashtable webPages;
         private readonly WebSpiderOptions spiderOptions;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -21,6 +24,16 @@ namespace LinkInspector.Objects
         #region Properties
 
         public Uri StartUri { get; set; }
+        private Queue WebPagesPending
+        {
+            get
+            {
+                lock (webPagesPending)
+                {
+                    return webPagesPending;
+                }
+            }
+        }
 
         #endregion
 
@@ -50,24 +63,10 @@ namespace LinkInspector.Objects
             Logger.Info(report.ToString(Report.ReportFormat.Head));
 
             AddWebPage(StartUri, StartUri.AbsoluteUri);
-            Stopwatch sw = new Stopwatch();
-            while (webPagesPending.Count > 0 &&
-                   (spiderOptions.UriProcessedCountMax == -1 || report.PagesProcessed < spiderOptions.UriProcessedCountMax))
-            {
-                WebPageState state = (WebPageState) webPagesPending.Dequeue();
-                sw.Start();
-                spiderOptions.WebPageProcessor.Process(state);
-                sw.Stop();
+            ThreadPool.SetMaxThreads(spiderOptions.NumberOfThreads, spiderOptions.NumberOfThreads);
+                ThreadPool.QueueUserWorkItem(ProcessWebState, report);
 
-                state.ElapsedTimeSpan = sw.Elapsed;
-                if (spiderOptions.ShowSuccessUrls || !state.IsOk)
-                    report.PageStates.Add(state);
-
-
-                report.PagesProcessed++;
-                Logger.Info(Resources.WebSpiderExecuteProcessedUrlsInfo, report.PagesProcessed, webPagesPending.Count, state);
-            }
-
+                WaitForThreads();
             report.EndTime = DateTime.Now;
             Logger.Info(report.ToString(Report.ReportFormat.Footer));
             return report;
@@ -100,10 +99,61 @@ namespace LinkInspector.Objects
                                 IsContinueProcess = uri.AbsoluteUri.StartsWith(spiderOptions.BaseUri.AbsoluteUri, StringComparison.OrdinalIgnoreCase)
                             };
 
-            webPagesPending.Enqueue(state);
+            WebPagesPending.Enqueue(state);
             webPages.Add(uri, state);
         }
 
         #endregion
+
+        #region Multi-threading
+
+        private void ProcessWebState(object rep)
+        {   
+            if(WebPagesPending.Count == 0)
+                return;
+
+            Report report = (Report)rep;
+            WebPageState state = (WebPageState)WebPagesPending.Dequeue();
+            spiderOptions.WebPageProcessor.Process(state);
+            if (spiderOptions.ShowSuccessUrls || !state.IsOk)
+                report.PageStates.Add(state);
+            report.PagesProcessed++;
+            Logger.Info(Resources.WebSpiderExecuteProcessedUrlsInfo, report.PagesProcessed, WebPagesPending.Count, state);
+
+            if (WebPagesPending.Count > 0 && (spiderOptions.UriProcessedCountMax == -1 || report.PagesProcessed < spiderOptions.UriProcessedCountMax))
+                ThreadPool.QueueUserWorkItem(ProcessWebState, report);
+            
+        }
+
+        private void WaitForThreads()
+        {
+            int timeOutSeconds = 14400;
+
+            //Now wait until all threads from the Threadpool have returned
+
+            while (timeOutSeconds > 0)
+            {
+                //figure out what the max worker thread count it
+
+                int placeHolder = 0;
+                int maxThreads;
+                ThreadPool.GetMaxThreads(out 
+                             maxThreads, out placeHolder);
+                int availThreads = 0;
+                ThreadPool.GetAvailableThreads(out availThreads,
+                                                               out placeHolder);
+
+                if (availThreads == maxThreads) break;
+
+                Thread.Sleep(TimeSpan.FromMilliseconds(1000));
+                --timeOutSeconds;
+            }
+            
+            Console.WriteLine("Exit because of the timeout");
+
+        }
+
+        #endregion
+
     }
 }
