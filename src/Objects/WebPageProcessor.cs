@@ -86,7 +86,6 @@ namespace LinkInspector.Objects
                           url.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
                               ? url
                               : string.Format(CultureInfo.InvariantCulture, "{0}/{1}", Options.BaseUri, url);
-                    Logger.Error(url);
                     requestUri = new Uri(url);
 
                     state.Redirects.Add(new WebPageState.WebRequestState { Uri = requestUri});

@@ -12,9 +12,6 @@ namespace LinkInspector.Objects
         #region Fields
 
         private readonly Queue webPagesPending;
-
-
-
         private readonly Hashtable webPages;
         private readonly WebSpiderOptions spiderOptions;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -24,6 +21,7 @@ namespace LinkInspector.Objects
         #region Properties
 
         public Uri StartUri { get; set; }
+        
         private Queue WebPagesPending
         {
             get
@@ -59,14 +57,13 @@ namespace LinkInspector.Objects
         public Report Execute()
         {
             Report report = new Report {StartUri = StartUri};
-
             Logger.Info(report.ToString(Report.ReportFormat.Head));
-
             AddWebPage(StartUri, StartUri.AbsoluteUri);
+            
             ThreadPool.SetMaxThreads(spiderOptions.NumberOfThreads, spiderOptions.NumberOfThreads);
-                ThreadPool.QueueUserWorkItem(ProcessWebState, report);
-
-                WaitForThreads();
+            ThreadPool.QueueUserWorkItem(ProcessWebState, report);
+            
+            WaitForThreads();
             report.EndTime = DateTime.Now;
             Logger.Info(report.ToString(Report.ReportFormat.Footer));
             return report;
@@ -74,13 +71,14 @@ namespace LinkInspector.Objects
 
         public void HandleLinks(WebPageState state)
         {
-            if (state != null && state.IsContinueProcess)
-            {
-                Match m = RegExUtil.GetMatchRegEx(state.Content);
-                do 
-                    AddWebPage(state.Uri, m.Groups["url"].ToString()); 
-                while ((m = m.NextMatch()).Success);
-            }
+            if (state == null || !state.IsContinueProcess) 
+                return;
+            
+            Match m = RegExUtil.GetMatchRegEx(state.Content);
+            
+            do 
+                AddWebPage(state.Uri, m.Groups["url"].ToString()); 
+            while ((m = m.NextMatch()).Success);
         }
 
         private void AddWebPage(Uri baseUri, string newUri)
@@ -127,21 +125,16 @@ namespace LinkInspector.Objects
 
         private void WaitForThreads()
         {
-            int timeOutSeconds = 14400;
-
-            //Now wait until all threads from the Threadpool have returned
+            int timeOutSeconds = 14400; //todo: Magic Number - timeout is 4 hours
 
             while (timeOutSeconds > 0)
             {
-                //figure out what the max worker thread count it
 
-                int placeHolder = 0;
+                int placeHolder;
                 int maxThreads;
-                ThreadPool.GetMaxThreads(out 
-                             maxThreads, out placeHolder);
-                int availThreads = 0;
-                ThreadPool.GetAvailableThreads(out availThreads,
-                                                               out placeHolder);
+                ThreadPool.GetMaxThreads(out maxThreads, out placeHolder);
+                int availThreads;
+                ThreadPool.GetAvailableThreads(out availThreads, out placeHolder);
 
                 if (availThreads == maxThreads) break;
 
@@ -149,8 +142,8 @@ namespace LinkInspector.Objects
                 --timeOutSeconds;
             }
             
-            Console.WriteLine("Exit because of the timeout");
-
+            if(timeOutSeconds == 0)
+                Logger.Warn("Exit because of the timeout");
         }
 
         #endregion

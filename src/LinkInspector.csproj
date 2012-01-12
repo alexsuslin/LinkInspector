@@ -78,13 +78,16 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CheckFile.cs" />
+    <Compile Include="Commands\CreateCheckFile.cs" />
     <Compile Include="Commands\GetHelp.cs" />
     <Compile Include="Commands\ParseUrl.cs" />
     <Compile Include="Commands\GetVerion.cs" />
     <Compile Include="Objects\Config.cs" />
+    <Compile Include="Objects\Helper.cs" />
     <Compile Include="Objects\IWebPageProcessor.cs" />
     <Compile Include="Objects\RegExUtil.cs" />
     <Compile Include="Objects\Report.cs" />
